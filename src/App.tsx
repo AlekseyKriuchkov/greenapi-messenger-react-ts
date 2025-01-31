@@ -1,6 +1,12 @@
-import './App.css'
+import style from './App.module.scss';
+import { MainView } from './components/main-view/main-view.tsx';
 
-function App() {
-}
-
-export default App
+export const App = () => {
+  return (
+    <div className={style.wrapper}>
+      <div className={style.content}>
+        <MainView />
+      </div>
+    </div>
+  );
+};
