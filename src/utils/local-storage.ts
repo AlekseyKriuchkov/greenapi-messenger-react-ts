@@ -1,5 +1,5 @@
 export enum LocalStorageKeys {
-  AUTH_DATA = 'is auth',
+  CHAT_TOKENS = 'chat_tokens',
 }
 
 export const localStorageGet = (key: LocalStorageKeys | string) => {

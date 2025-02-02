@@ -1,11 +1,11 @@
 import style from './App.module.scss';
-import { MainView } from './components/main-view/main-view.tsx';
+import { Main } from './components/main/main.tsx';
 
 export const App = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
-        <MainView />
+        <Main />
       </div>
     </div>
   );

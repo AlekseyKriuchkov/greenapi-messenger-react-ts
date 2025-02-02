@@ -1,58 +1,59 @@
 import style from './styles.module.scss';
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { FC } from 'react';
 import {
   LocalStorageKeys,
   localStorageSet,
 } from '../../utils/local-storage.ts';
-import { AuthData } from '../main-view/main-view.tsx';
+import { AuthData } from '../main/main.tsx';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 type Props = {
   changeAuthData: (AuthData: AuthData) => void;
 };
 
 export const Authorisation: FC<Props> = ({ changeAuthData }) => {
-  const [formData, setFormData] = useState<AuthData>({
-    idInstance: '',
-    apiTokenInstance: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<AuthData>();
 
-  const isValidForm = (): boolean =>
-    formData.idInstance.trim() === '' ||
-    formData.apiTokenInstance.trim() === '';
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (isValidForm()) {
-      alert('Fill in all fields');
-      return;
-    }
-    localStorageSet(LocalStorageKeys.AUTH_DATA, JSON.stringify(formData));
-    changeAuthData(formData);
-    setFormData({ idInstance: '', apiTokenInstance: '' });
+  const handleFormSubmit: SubmitHandler<AuthData> = (data) => {
+    localStorageSet(LocalStorageKeys.CHAT_TOKENS, JSON.stringify(data));
+    changeAuthData(data);
+    reset();
   };
 
   return (
     <div className={style.wrapper}>
-      <form className={style.form} onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          name="idInstance"
-          value={formData.idInstance}
-          onChange={handleInputChange}
-          placeholder="idInstance"
-        />
-        <input
-          type="text"
-          name="apiTokenInstance"
-          value={formData.apiTokenInstance}
-          onChange={handleInputChange}
-          placeholder="apiTokenInstance"
-        />
+      <form className={style.form} onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className={style.inputWrapper}>
+          <input
+            type="text"
+            placeholder="idInstance"
+            {...register('idInstance', {
+              required: 'Field is required',
+            })}
+          />
+          {errors.idInstance && (
+            <span className={style.error}>{errors.idInstance.message}</span>
+          )}
+        </div>
+        <div className={style.inputWrapper}>
+          <input
+            type="text"
+            placeholder="apiTokenInstance"
+            {...register('apiTokenInstance', {
+              required: 'Field is required',
+            })}
+          />
+          {errors.apiTokenInstance && (
+            <span className={style.error}>
+              {errors.apiTokenInstance.message}
+            </span>
+          )}
+        </div>
         <button type="submit" className={style.button}>
           Submit
         </button>

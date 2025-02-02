@@ -7,7 +7,10 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: space-around;
+  gap: 25px;
+  min-height: 180px;
+  min-width: 220px;
 }
 
 .button {
@@ -18,4 +21,14 @@
   border: none;
   cursor: pointer;
   padding: 5px 0;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.error {
+  color: #f35252;
 }
