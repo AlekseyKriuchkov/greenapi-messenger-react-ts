@@ -4,32 +4,32 @@ import {
   localStorageGet,
   LocalStorageKeys,
 } from '../../utils/local-storage.ts';
-import { ChatView } from '../chat-view/chat-view.tsx';
+import { Chat } from '../chat/chat.tsx';
 
 export type AuthData = {
   idInstance: string;
   apiTokenInstance: string;
 };
 
-export const MainView = () => {
+export const Main = () => {
   const [isAuthorised, setIsAuthorised] = useState(false);
   const [authData, setAuthData] = useState<AuthData | null>(null);
 
   useEffect(() => {
-    const isAuth = localStorageGet(LocalStorageKeys.AUTH_DATA);
-    if (isAuth) setIsAuthorised(false);
-    if (!isAuth) {
-      setIsAuthorised(true);
+    const authData = localStorageGet(LocalStorageKeys.CHAT_TOKENS);
+    if (authData) {
+      setAuthData(JSON.parse(authData));
     }
+  }, []);
+
+  useEffect(() => {
+    const isAuth = Boolean(localStorageGet(LocalStorageKeys.CHAT_TOKENS));
+    setIsAuthorised(isAuth);
   }, [authData]);
 
-  return (
-    <div>
-      {isAuthorised ? (
-        <Authorisation changeAuthData={setAuthData} />
-      ) : (
-        <ChatView />
-      )}
-    </div>
+  return isAuthorised ? (
+    <Chat userTokens={authData} />
+  ) : (
+    <Authorisation changeAuthData={setAuthData} />
   );
 };
