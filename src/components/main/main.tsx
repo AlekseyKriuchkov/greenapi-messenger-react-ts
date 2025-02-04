@@ -12,7 +12,6 @@ export type AuthData = {
 };
 
 export const Main = () => {
-  const [isAuthorised, setIsAuthorised] = useState(false);
   const [authData, setAuthData] = useState<AuthData | null>(null);
 
   useEffect(() => {
@@ -22,12 +21,7 @@ export const Main = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const isAuth = Boolean(localStorageGet(LocalStorageKeys.CHAT_TOKENS));
-    setIsAuthorised(isAuth);
-  }, [authData]);
-
-  return isAuthorised ? (
+  return authData ? (
     <Chat userTokens={authData} />
   ) : (
     <Authorisation changeAuthData={setAuthData} />

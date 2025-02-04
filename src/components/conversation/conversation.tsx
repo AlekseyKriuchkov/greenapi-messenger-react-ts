@@ -36,7 +36,7 @@ export const Conversation: FC<Props> = ({ contactNumber, userTokens }) => {
     if (response?.receiptId) {
       const textMessage =
         response.body.messageData?.textMessageData?.textMessage;
-      if (textMessage && contactNumber) {
+      if (textMessage) {
         const newMessage = {
           message: textMessage,
           sender: response.body.senderData.senderName || 'Unknown',

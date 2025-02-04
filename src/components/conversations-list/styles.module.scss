@@ -12,22 +12,28 @@
   align-items: center;
   gap: 10px;
   width: 100%;
+
+  .chatItem {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    width: 80%;
+    padding-top: 5px;
+    border-top: 1px solid rgb(134, 150, 160);
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(134, 150, 160, 0.1);
+    }
+  }
+
+  .chatItem:first-child {
+    border: none;
+  }
 }
 
-.chatItem {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  width: 80%;
-  padding-top: 5px;
-  border-top: 1px solid rgb(134, 150, 160);
-  cursor: pointer;
-}
 
-.chatItem:first-child {
-  border: none;
-}
 
 .input {
   box-sizing: border-box;

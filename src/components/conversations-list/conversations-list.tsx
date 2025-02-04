@@ -1,31 +1,40 @@
 import style from './styles.module.scss';
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useState } from 'react';
 
 type Props = {
-  choiceChat: (contactNumber: number) => void;
+  selectChat: (contactNumber: number) => void;
 };
 
-export const ConversationsList: FC<Props> = ({ choiceChat }) => {
+export const ConversationsList: FC<Props> = ({ selectChat }) => {
   const [chatList, setChatList] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(event.target.value);
+    },
+    []
+  );
 
-  const handleNumberSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue.trim() !== '') {
-      const numberValue = Number(inputValue);
-      if (!isNaN(numberValue)) {
-        setChatList((prev) => [numberValue, ...prev]);
-        setInputValue('');
+  const handleNumberSubmit = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter' && inputValue.trim() !== '') {
+        const numberValue = Number(inputValue);
+        if (!isNaN(numberValue)) {
+          setChatList((prev) => [numberValue, ...prev]);
+          setInputValue('');
+        }
       }
-    }
-  };
+    },
+    [inputValue]
+  );
 
-  const handleChoiceChat = (chat: number) => {
-    choiceChat(chat);
-  };
+  const handleChoiceChat = useCallback(
+    (chat: number) => {
+      selectChat(chat);
+    },
+    [selectChat]
+  );
 
   return (
     <div className={style.wrapper}>

@@ -6,7 +6,7 @@ import { Conversation } from '../conversation/conversation.tsx';
 import { AuthData } from '../main/main.tsx';
 
 type Props = {
-  userTokens: AuthData | null;
+  userTokens: AuthData;
 };
 
 export const Chat: FC<Props> = ({ userTokens }) => {
@@ -15,7 +15,7 @@ export const Chat: FC<Props> = ({ userTokens }) => {
   return (
     <div className={style.wrapper}>
       <NavBar />
-      <ConversationsList choiceChat={setContactNumber} />
+      <ConversationsList selectChat={setContactNumber} />
       <Conversation userTokens={userTokens} contactNumber={contactNumber} />
     </div>
   );
