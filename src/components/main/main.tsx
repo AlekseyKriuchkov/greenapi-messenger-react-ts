@@ -1,15 +1,16 @@
-import { Authorisation } from '../authorisation/authorisation.tsx';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import {
   localStorageGet,
   LocalStorageKeys,
 } from '../../utils/local-storage.ts';
-import { Chat } from '../chat/chat.tsx';
 
 export type AuthData = {
   idInstance: string;
   apiTokenInstance: string;
 };
+
+const ChatLayout = lazy(() => import('../chat-layout/chat-layout.tsx'));
+const Authorisation = lazy(() => import('../authorisation/authorisation.tsx'));
 
 export const Main = () => {
   const [authData, setAuthData] = useState<AuthData | null>(null);
@@ -21,9 +22,13 @@ export const Main = () => {
     }
   }, []);
 
-  return authData ? (
-    <Chat userTokens={authData} />
-  ) : (
-    <Authorisation changeAuthData={setAuthData} />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {authData ? (
+        <ChatLayout userTokens={authData} />
+      ) : (
+        <Authorisation changeAuthData={setAuthData} />
+      )}
+    </Suspense>
   );
 };

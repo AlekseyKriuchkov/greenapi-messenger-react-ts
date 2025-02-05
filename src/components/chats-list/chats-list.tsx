@@ -5,7 +5,7 @@ type Props = {
   selectChat: (contactNumber: number) => void;
 };
 
-export const ConversationsList: FC<Props> = ({ selectChat }) => {
+export const ChatsList: FC<Props> = ({ selectChat }) => {
   const [chatList, setChatList] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
 

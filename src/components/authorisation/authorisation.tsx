@@ -11,7 +11,7 @@ type Props = {
   changeAuthData: (AuthData: AuthData) => void;
 };
 
-export const Authorisation: FC<Props> = ({ changeAuthData }) => {
+const Authorisation: FC<Props> = ({ changeAuthData }) => {
   const {
     register,
     handleSubmit,
@@ -61,3 +61,5 @@ export const Authorisation: FC<Props> = ({ changeAuthData }) => {
     </div>
   );
 };
+
+export default Authorisation;
