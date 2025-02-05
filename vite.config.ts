@@ -4,5 +4,6 @@ import eslint from 'vite-plugin-eslint2';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/greenapi-messenger-react-ts/',
   plugins: [react(), eslint()],
 });
