@@ -16,7 +16,7 @@ export const ChatsList: FC<Props> = ({ selectChat }) => {
     []
   );
 
-  const handleNumberSubmit = useCallback(
+  const handleSubmitPhoneNumber = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter' && inputValue.trim() !== '') {
         const numberValue = Number(inputValue);
@@ -43,7 +43,7 @@ export const ChatsList: FC<Props> = ({ selectChat }) => {
         className={style.input}
         value={inputValue}
         onChange={handleInputChange}
-        onKeyDown={handleNumberSubmit}
+        onKeyDown={handleSubmitPhoneNumber}
         placeholder="Enter a number"
       />
       <p className={style.text}>Chats</p>
